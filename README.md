@@ -1,1 +1,3 @@
-# tabuSearch_smtwtp
+# tabuSearch
+
+#### tabu arama temel algoritması
