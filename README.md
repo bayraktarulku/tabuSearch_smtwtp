@@ -62,4 +62,46 @@ def obj_fun(self, solution, show = False):
         return objfun_value
 ```
 
+```
+solution_1 = [1,2,5,6,8,9,10,3,4,7]
+solution_2 = [2,3,5,10,6,8,9,4,7,1]
+
+Objfun(instance_dict, solution_1, show=True)
+Objfun(instance_dict,solution_2, show=True);
+```
+
 Objfun() metodu çözümün amaç fonksiyon değerini döndürür. İşleri rastgele verilmiş 2 çözüm arasında hangi çözümün daha iyi olduğunu görmek için Objfun'u kullanabiliriz. Her çözüm için Objfun (amaç fonk. değeri) hesaplanır. Ve birbiriyle karşılaştırılır. Daha iyi bir amaç fonksiyon değerine(küçültme) sahip olan çözümü en iyi çözüm dizimiz olarak ele alıyoruz.
+
+
+###### Algoritmayı tasarlamanın genel adımlarıyla başlayalım
+- Adım 0
+    - İlk adım, algoritmanın üzerinde yineleyerek daha iyi bir çözüm bulabilmesi için bir ilk çözümü oluşturmaktır.
+    - İlk çözüm algoritmanın başlangıç noktası olarak görülebilir;
+        - çoğu durumda bu ilk çözüm rastgele atanır. (Ancak problemi daha iyi anlarsanız, ilk çözümü oluşturmak için özel bir algoritma tasarlayabilirsiniz)
+
+```
+def get_InitialSolution(self, show=False):
+    n_jobs = len(self.instance_dict) # Yapılacak iş sayısı
+    # Rastgele bir iş programı oluştur
+    initial_solution = list(range(1, n_jobs+1))
+    rd.seed(self.seed)
+    rd.shuffle(initial_solution)
+    if show == True:
+        # TA algoritması, bir başlangıç çözümü
+        # Rastgele ilk çözüm
+        print('initial Random Solution: {}'.format(initial_solution))
+    return initial_solution
+```
+
+- Adım 1
+    - Artık ilk çözüme sahip olduğumuza göre, bir sonraki adım mevcut çözümden aday çözümlerin listesini oluşturmaktır.
+    - 𝕊 (0 yinelemede ilk çözüm), bu çözümlere komşu veya 𝕊 mahallesi diyoruz.
+    - Mevcut çözümden(solution)  komşu çözümleri bulmak için, bir komşuluk işlevi olarak adlandırılan şeyi tanımlamamız gerekir, bu işlev altında her çözüm 𝕊, ilişkili bir çözüm alt kümesine sahiptir.
+    - Mevcut çözüm -> = [3, 8, 10, 4, 1, 6, 2, 5, 9, 7] olduğunu varsayalım.
+    - Komşuluk fonksiyonu -> swap move N(, Swap); iki işin sırasını değiştirme.
+    - Böylece bir mahalle çözümü:
+        [8, 3, 10, 4, 1, 6, 2, 5, 9, 7] (burada iş 8 ve 3 yer değiştirir)
+        [8, 3, 5, 4, 1, 6, 2, 10, 9, 7] (burada iş 5 ve 10 yer değiştirir)
+
+  ** Sonuç olarak, takas hareketinin 𝕊 üzerinde gerçekleştirilmesinden gelen komşuluk
+      çözümlerinin sayısı; n iş için (n-2) Big-O notasyonu -> O(n2).

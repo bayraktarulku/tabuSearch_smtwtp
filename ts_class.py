@@ -1,7 +1,7 @@
 import pandas as pd
 import random as rd
 from itertools import combinations
-from pprint import pprint
+# from pprint import pprint
 
 class TabuSearch():
     def __init__(self, Path, seed, tabu_tenure, Penalization_weight):
@@ -10,7 +10,6 @@ class TabuSearch():
         self.tabu_tenure = tabu_tenure
         self.Penalization_weight = Penalization_weight
         self.instance_dict = self.input_data()
-        pprint(self.instance_dict)
         self.Initial_solution = self.get_InitialSolution()
         self.tabu_str, self.Best_solution, self.Best_objvalue = self.TSearch()
 
@@ -127,6 +126,7 @@ class TabuSearch():
                 best_move = min(tabu_structure, key =lambda x: tabu_structure[x]['Penalized_MV'])
                 MoveValue = tabu_structure[best_move]['MoveValue']
                 tabu_time = tabu_structure[best_move]['tabu_time']
+                print('tabu_time', tabu_time)
                 # Penalized_MV = tabu_structure[best_move]['Penalized_MV']
                 # Eğer tabu değil ise;
                 if tabu_time < iter:
@@ -143,7 +143,7 @@ class TabuSearch():
                         Terminate = 0
                     else:
                         print(
-                            '   ##Termination: {}## best_move: {}, Objvalue: {} => Least non-improving => '
+                            '##Termination: {}## best_move: {}, Objvalue: {} => Least non-improving => '
                             'Admissible'.format(Terminate, best_move, current_objvalue))
                         Terminate += 1
                     # update tabu_time for the move and freq count
@@ -160,7 +160,7 @@ class TabuSearch():
                         current_objvalue = self.obj_fun(current_solution)
                         best_solution = current_solution
                         best_objvalue = current_objvalue
-                        print('best_move: {}, Objvalue: {} => Aspiration => Admissible'.\
+                        print('best_move: {}, Objvalue: {} => Aspiration => Acceptable'.\
                             format(best_move, current_objvalue))
                         tabu_structure[best_move]['freq'] += 1
                         Terminate = 0
@@ -168,7 +168,7 @@ class TabuSearch():
                         break
                     else:
                         tabu_structure[best_move]['Penalized_MV'] = float('inf')
-                        print('   best_move: {}, Objvalue: {} => Tabu => Inadmissible'.format(best_move,
+                        print('best_move: {}, Objvalue: {} => Tabu => Unacceptable'.format(best_move,
                                                                                               current_objvalue))
                         continue
         print(
