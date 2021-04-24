@@ -94,7 +94,6 @@ class TabuSearch():
         # ilk çözümün objvalue
         tenure = self.tabu_tenure
         tabu_structure = self.get_tabuestructure()  # Bir tabu yapısu oluşturulur.
-        print('tabu_structure', tabu_structure)
         best_solution = self.Initial_solution # TA algoritması, bir başlangıç çözümü belirlenir
         best_objvalue = self.obj_fun(best_solution) # Başlangıç çözümünün amaç fonk. değeri hesaplanır
         current_solution = self.Initial_solution # Belirlenen başlangıç çözümü, mevcut çözüm olarak atanır
@@ -146,7 +145,7 @@ class TabuSearch():
                             '##Termination: {}## best_move: {}, Objvalue: {} => Least non-improving => '
                             'Admissible'.format(Terminate, best_move, current_objvalue))
                         Terminate += 1
-                    # update tabu_time for the move and freq count
+                    # move/taşıma ve freq/sıklık sayısı için tabu süresi güncellenir
                     tabu_structure[best_move]['tabu_time'] = iter + tenure
                     tabu_structure[best_move]['freq'] += 1
                     iter += 1
