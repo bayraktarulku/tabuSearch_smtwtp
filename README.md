@@ -104,3 +104,10 @@ def get_InitialSolution(self, show=False):
 
   ** Sonuç olarak, takas hareketinin 𝕊 üzerinde gerçekleştirilmesinden gelen komşuluk
       çözümlerinin sayısı; n iş için (n-2) Big-O notasyonu -> O(n2).
+- Adım 3
+    - Durdurma kriterleri karşılanmazsa; Tekrarla
+        - Tanımlanmış durdurma ölçütleri kontrol ederiz. (ulaşılan maksimum yineleme sayısı veya çalışma süresi olabilir).
+        - Durdurma kriterleri karşılanırsa sonlandırılır ve en iyi çözümü getirilir.
+
+- Adım 4
+    - Tabu listesini ve Aspirasyon Kriterleri güncellenir ve Adım 1'e gidilir
