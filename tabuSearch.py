@@ -93,14 +93,15 @@ class TabuSearch():
         current_objvalue = self.Objfun(current_solution)
 
         print(
-            '#'*30, 'Short-term memory TS with Tabu Tenure: {}\nInitial Solution: {}, Initial Objvalue: {}'\
+            '#'*30, 'kısa süreli bellek yapısı & Tabu Görev Süresi : {}\nilk çözüm: {}, Amaç fonksiyon değeri: {}'\
             .format(tenure, current_solution, current_objvalue), '#'*30, sep='\n\n')
         iter = 1
         Terminate = 0
         while Terminate < 100:
-            print('\n\n### iter {}###  Current_Objvalue: {}, Best_Objvalue: {}'.format(iter, current_objvalue,
+            print('\n\n### iter {}###  Mevcut Obj değeri: {}, En iyi Obj değeri: {}'.format(iter, current_objvalue,
                                                                                     best_objvalue))
             # Mevcut çözümün tüm mahallesi(komuşuları) aranır
+            # print('planlanan iş dizisi', tabu_structure)
             for move in tabu_structure:
                 candidate_solution = self.SwapMove(current_solution, move[0], move[1])
                 candidate_objvalue = self.Objfun(candidate_solution)
@@ -112,9 +113,11 @@ class TabuSearch():
                 best_move = min(tabu_structure, key =lambda x: tabu_structure[x]['MoveValue'])
                 MoveValue = tabu_structure[best_move]["MoveValue"]
                 tabu_time = tabu_structure[best_move]["tabu_time"]
+                # print('tabu zamanı', tabu_time)
                 # Eğer tabu değil ise;
                 if tabu_time < iter:
                     # make the move
+                    print(current_solution, best_move[0], best_move[1])
                     current_solution = self.SwapMove(current_solution, best_move[0], best_move[1])
                     current_objvalue = self.Objfun(current_solution)
                     # iyileştirme Hareketi
@@ -122,12 +125,12 @@ class TabuSearch():
                         best_solution = current_solution
                         best_objvalue = current_objvalue
                         print(
-                            '   best_move: {}, Objvalue: {} => Best Improving => Admissible'\
+                            'en iyi hamle: {}, Obj Değeri: {} => En İyi Gelişme => Kabul Edilebilir'\
                             .format(best_move, current_objvalue))
                         Terminate = 0
                     else:
                         print(
-                            '   ##Termination: {}## best_move: {}, Objvalue: {} => Least non-improving => Admissible'\
+                            '   ##Sonlandırma: {}## en iyi hamle: {}, Obj Değeri: {} => En az iyileşmeyen => Kabul Edilebilir'\
                             .format(Terminate,best_move, current_objvalue))
                         Terminate += 1
                     # taşıma için tabu süresi güncellenir
@@ -144,7 +147,7 @@ class TabuSearch():
                         best_solution = current_solution
                         best_objvalue = current_objvalue
                         print(
-                            '   best_move: {}, Objvalue: {} => Aspiration => Admissible'\
+                            'en iyi hamle: {}, Obj Değeri: {} => Aspirasyon => Kabul Edilebilir'\
                             .format(best_move, current_objvalue))
                         Terminate = 0
                         iter += 1
@@ -152,13 +155,13 @@ class TabuSearch():
                     else:
                         tabu_structure[best_move]['MoveValue'] = float('inf')
                         print(
-                            '   best_move: {}, Objvalue: {} => Tabu => Inadmissible'\
+                            'en iyi hamle: {}, Obj Değeri: {} => Tabu => Kabul edilemez'\
                             .format(best_move, current_objvalue))
 
                         continue
         print(
             '#'*50 ,
-            'Performed iterations: {}'.format(iter), 'Best found Solution: {} , Objvalue: {}'\
+            'Yapılan iterasyon sayısı: {}'.format(iter), 'Bulunan en iyi çözüm: {} , Objvalue: {}'\
             .format(best_solution,best_objvalue), sep='\n')
 
         return tabu_structure, best_solution, best_objvalue
