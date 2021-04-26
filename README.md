@@ -61,7 +61,7 @@ def obj_fun(self, solution, show = False):
                 .format(solution ,objfun_value), '#'*8)
         return objfun_value
 ```
-`
+```
 solution_1 = [1,2,5,6,8,9,10,3,4,7]
 solution_2 = [2,3,5,10,6,8,9,4,7,1]
 
