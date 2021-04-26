@@ -111,3 +111,7 @@ def get_InitialSolution(self, show=False):
 
 - Adım 4
     - Tabu listesini ve Aspirasyon Kriterleri güncellenir ve Adım 1'e gidilir
+
+### tavlama benzetimi eklenecek ###
+
+
