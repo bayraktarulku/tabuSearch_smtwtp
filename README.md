@@ -115,3 +115,5 @@ def get_InitialSolution(self, show=False):
 ### tavlama benzetimi eklenecek ###
 
 
+Ref: 
+- [Taylan Kabbani - Metaheuristic-Algorithms-for-SMTWTP](https://github.com/taylankabbani/Metaheuristic-Algorithms-for-SMTWTP)
